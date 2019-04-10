@@ -1,7 +1,16 @@
 const express = require('express');
 const app = express();
 
+//Configurações
+app.set('port', process.env.PORT || 3000);
 
-app.listen(3000, () => {
-    console.log("Servidor na porta 3000");
+//Middlewares
+app.get(express.json());
+
+//Rotas
+app.use(require('./routes/routes'));
+
+//Inicia servidor
+app.listen(app.get('port'), () => {
+    console.log("Servidor na porta", app.get('port'));
 })

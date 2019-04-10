@@ -8,7 +8,7 @@ app.set('port', process.env.PORT || 3000);
 app.get(express.json());
 
 //Rotas
-app.use(require('./routes/routes'));
+app.use(require('./routes/users'));
 
 //Inicia servidor
 app.listen(app.get('port'), () => {

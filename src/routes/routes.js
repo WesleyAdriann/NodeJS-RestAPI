@@ -10,9 +10,10 @@ router.get('/', (req, res) => {
 router.get('/tb_pcs', (req, res) => {
     mysqlConnection.query('select * from tb_pcs;', (err, rows, fiels) => {
        if(!err) {
-           res.json(rows);   
+            res.status(200);
+            res.json(rows);   
        } else {
-           console.log(err);
+            console.log(err);
        }
     })  
 });
@@ -20,7 +21,8 @@ router.get('/tb_pcs', (req, res) => {
 router.get('/tb_response', (req, res) => {
     mysqlConnection.query('select * from tb_response;', (err, rows, fiels) => {
        if(!err) {
-           res.json(rows);
+            res.status(200);
+            res.json(rows);
        } else {
            console.log(err);
        }
@@ -42,6 +44,7 @@ router.post('/tb_pcs', (req, res) => {
     const { nome, pat, modelo, setor, sala} = req.body;
     mysqlConnection.query(`INSERT INTO tb_pcs values ( ?, ?, ?, ?, ?);`, [nome, pat, modelo, setor, sala], (err, rows, fields) => {
         if(!err) {
+            res.status(201);
             res.json({Status: "OK"});
         }else {
             res.json({Status: 'Não foi Criado' , Erro: err});
@@ -54,6 +57,7 @@ router.put('/tb_pcs/:pat', (req, res) => {
     const { pat } = req.params;
     mysqlConnection.query('update tb_pcs set nome = ?, modelo = ?, setor = ?, sala = ? where pat = ?;', [nome, modelo, setor, sala, pat], (err) => {
         if(!err) {
+            res.status(201);
             res.json({Status : "OK"});
         }else {
             res.json({Status: "Erro", Erro: err});
@@ -65,6 +69,7 @@ router.delete('/tb_pcs/:pat', (req, res) => {
     const { pat } = req.params;
     mysqlConnection.query('delete from tb_pcs where pat = ?', [pat], (err) => {
         if(!err) {
+            res.status(200);
             res.json({Status : "OK"});
         }else {
             res.json({Status: "Erro", Erro: err});
@@ -72,15 +77,7 @@ router.delete('/tb_pcs/:pat', (req, res) => {
     })
 })
 
-// router.post('/', (req, res) => {
-//     const { id, nome, telefone} = req.body;
-//     const query = ' call usersAddOrEdit( ?, ?, ?);';
-//     mysqlConnection.query(query, [id, nome, telefone], (err, rows, fields) => {
-//         if(!err) {
-//             res.json({Status: 'Usuario criado'});
-//         }else {}
-//     })
-// })
+
 
 
 module.exports = router;
